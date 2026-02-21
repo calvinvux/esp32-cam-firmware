@@ -1,0 +1,77 @@
+esphome:
+  name: esp32-cam
+  platform: ESP32
+  board: esp32cam
+  platformio_options:
+    board_build.flash_mode: dio
+    board_build.partitions: huge_app.csv
+    board_build.board: esp32cam
+
+wifi:
+  ssid: !env WIFI_SSID
+  password: !env WIFI_PASSWORD
+  ap:
+    ssid: "ESP32-CAM Fallback"
+    password: !env AP_PASSWORD
+
+logger:
+
+api:
+  password: !env API_PASSWORD
+
+ota:
+  password: !env OTA_PASSWORD
+  safe_mode: true
+  reboot_timeout: 5min
+
+web_server:
+  port: 80
+
+camera:
+  - platform: esp32
+    id: esp32_camera
+    name: ESP32 Camera
+    data_pins:
+      - GPIO15
+      - GPIO13
+      - GPIO12
+      - GPIO14
+      - GPIO2
+      - GPIO4
+      - GPIO16
+      - GPIO17
+    vsync_pin: GPIO5
+    href_pin: GPIO21
+    pixel_clock_pin: GPIO22
+    reset_pin: GPIO16
+    resolution: SVGA
+    jpeg_quality: 10
+    idle_framerate: 0.3 fps
+
+status_led:
+  pin:
+    number: GPIO33
+    inverted: yes
+
+http_request:
+  id: http_client
+  timeout: 30s
+
+button:
+  - platform: restart
+    name: "Restart ESP32-CAM"
+    id: restart_btn
+
+sensor:
+  - platform: wifi_signal
+    name: WiFi Signal
+    update_interval: 60s
+
+text_sensor:
+  - platform: version
+    name: ESPHome Version
+  - platform: wifi_info
+    ip_address:
+      name: IP Address
+    ssid:
+      name: Connected SSID
