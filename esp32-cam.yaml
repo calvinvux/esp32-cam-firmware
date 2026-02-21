@@ -1,11 +1,6 @@
 esphome:
   name: esp32-cam
   platform: ESP32
-  board: esp32cam
-  platformio_options:
-    board_build.flash_mode: dio
-    board_build.partitions: huge_app.csv
-    board_build.board: esp32cam
 
 wifi:
   ssid: "Calvin"
@@ -29,43 +24,27 @@ web_server:
 
 camera:
   - platform: esp32
-    id: esp32_camera
     name: ESP32 Camera
-    data_pins:
-      - GPIO15
-      - GPIO13
-      - GPIO12
-      - GPIO14
-      - GPIO2
-      - GPIO4
-      - GPIO16
-      - GPIO17
-    vsync_pin: GPIO5
-    href_pin: GPIO21
-    pixel_clock_pin: GPIO22
-    reset_pin: GPIO16
-    resolution: SVGA
-    jpeg_quality: 10
-    idle_framerate: 0.3 fps
+    external_components:
+      - source:
+          type: git
+          url: https://github.com/esphome/esphome
+          ref: 2024.12.0
+          components:
+            - esp32_camera
 
 status_led:
   pin:
-    number: GPIO33
+    number: 33
     inverted: yes
-
-http_request:
-  id: http_client
-  timeout: 30s
 
 button:
   - platform: restart
     name: "Restart ESP32-CAM"
-    id: restart_btn
 
 sensor:
   - platform: wifi_signal
     name: WiFi Signal
-    update_interval: 60s
 
 text_sensor:
   - platform: version
