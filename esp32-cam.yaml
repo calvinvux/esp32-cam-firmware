@@ -8,19 +8,19 @@ esphome:
     board_build.board: esp32cam
 
 wifi:
-  ssid: !env WIFI_SSID
-  password: !env WIFI_PASSWORD
+  ssid: "Calvin"
+  password: "Khongc0p@ss"
   ap:
     ssid: "ESP32-CAM Fallback"
-    password: !env AP_PASSWORD
+    password: "12345678"
 
 logger:
 
 api:
-  password: !env API_PASSWORD
+  password: "esp32cam123"
 
 ota:
-  password: !env OTA_PASSWORD
+  password: "esp32cam123"
   safe_mode: true
   reboot_timeout: 5min
 
