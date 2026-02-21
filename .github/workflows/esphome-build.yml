@@ -23,20 +23,6 @@ jobs:
       - name: Install ESPHome
         run: pip install esphome
 
-      - name: Create secrets file
-        run: |
-          echo "wifi_ssid: $WIFI_SSID" > secrets.yaml
-          echo "wifi_password: $WIFI_PASSWORD" >> secrets.yaml
-          echo "api_password: $API_PASSWORD" >> secrets.yaml
-          echo "ota_password: $OTA_PASSWORD" >> secrets.yaml
-          echo "ap_password: $AP_PASSWORD" >> secrets.yaml
-        env:
-          WIFI_SSID: ${{ secrets.WIFI_SSID }}
-          WIFI_PASSWORD: ${{ secrets.WIFI_PASSWORD }}
-          API_PASSWORD: ${{ secrets.API_PASSWORD }}
-          OTA_PASSWORD: ${{ secrets.OTA_PASSWORD }}
-          AP_PASSWORD: ${{ secrets.AP_PASSWORD }}
-
       - name: Build firmware
         run: esphome compile esp32-cam.yaml
 
